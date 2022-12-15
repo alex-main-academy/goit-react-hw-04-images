@@ -1,21 +1,26 @@
 import css from './Modal.module.css';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 const Modal = ({ handleCloseModal, url }) => {
-  const handleKeyDown = event => {
-    if (event.code === 'Escape') {
-      handleCloseModal();
-    }
-  };
+  const handleKeyDown = useCallback(
+    event => {
+      if (event.code === 'Escape') {
+        handleCloseModal();
+      }
+    },
+    [handleCloseModal]
+  );
 
-  const handleOverlayClose = event => {
-    if (event.target === event.currentTarget) {
-      handleCloseModal();
-    }
-
-    return;
-  };
+  const handleOverlayClose = useCallback(
+    event => {
+      if (event.target === event.currentTarget) {
+        handleCloseModal();
+      }
+      return;
+    },
+    [handleCloseModal]
+  );
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
