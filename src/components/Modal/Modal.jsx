@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 const Modal = ({ handleCloseModal, url }) => {
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [handleKeyDown]);
 
   useEffect(() => {
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [handleKeyDown]);
 
   const handleKeyDown = event => {
     if (event.code === 'Escape') {
