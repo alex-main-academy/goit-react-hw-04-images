@@ -44,39 +44,38 @@ export const App = () => {
     if (search === '') {
       return;
     }
-    setPage(1);
-    setImages([]);
-
-    getPhotos(1)
-      .then(data => {
-        if (data.length === 0) {
-          Notiflix.Notify.failure('Images not found...');
-        }
-        setImages([...data]);
-      })
-      .catch(err => console.log(err));
-  }, [search, getPhotos]);
-
-  useEffect(() => {
-    if (images.length === 0) {
+    if (page === 1) {
+      getPhotos(page)
+        .then(data => {
+          if (data.length === 0) {
+            Notiflix.Notify.failure('Images not found...');
+          }
+          setImages([...data]);
+        })
+        .catch(err => console.log(err));
       return;
     }
-    setPage(page => page + 1);
-  }, [images]);
-
-  const loadMore = () => {
     getPhotos(page)
       .then(data => {
-        setImages([...images, ...data]);
+        setImages(images => [...images, ...data]);
       })
       .catch(err => console.log(err));
+  }, [search, getPhotos, page]);
+
+  const loadMore = () => {
+    setPage(page + 1);
   };
 
   const onSubmit = event => {
     event.preventDefault();
-    let search = event.target.elements.searchInput.value;
+    let searchName = event.target.elements.searchInput.value;
 
-    setSearch(search);
+    if (searchName !== search) {
+      setPage(1);
+      setImages([]);
+    }
+
+    setSearch(searchName);
   };
 
   return (
