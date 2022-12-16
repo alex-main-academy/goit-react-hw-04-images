@@ -24,9 +24,6 @@ const Modal = ({ handleCloseModal, url }) => {
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
-  }, [handleKeyDown]);
-
-  useEffect(() => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
 
