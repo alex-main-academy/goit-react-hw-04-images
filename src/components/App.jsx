@@ -63,7 +63,7 @@ export const App = () => {
   }, [search, getPhotos, page]);
 
   const loadMore = () => {
-    setPage(page + 1);
+    setPage(page => page + 1);
   };
 
   const onSubmit = event => {
